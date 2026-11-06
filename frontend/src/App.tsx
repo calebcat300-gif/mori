@@ -161,7 +161,14 @@ const file: string = "App.tsx";
 function TabBar() {
   return (
     <nav className="flex h-[34px] shrink-0 bg-[#151515]">
-      <div className="flex h-full items-center bg-[#202020] px-3">{file}</div>
+      <div className="flex h-full items-center gap-2 bg-[#202020] px-3">
+        <img
+          src="/icons/react_ts.svg"
+          alt=""
+          className="h-5 w-5 shrink-0 grayscale brightness-125"
+        />
+        {file}
+      </div>
     </nav>
   );
 }
