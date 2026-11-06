@@ -1,6 +1,10 @@
+import { Search, X } from "lucide-react";
+import { getFileIcon } from "./lib/fileIcons";
 import moriLogo from "./assets/mori-no-bg.png";
 import CodeEditor from "./components/CodeEditor";
 import FileExplorer from "./components/FileExplorer";
+import { useState } from "react";
+
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -112,9 +116,12 @@ function Menu({ label, items }: MenuProps) {
 }
 
 // Top title bar
+
 function TitleBar() {
+  const [searchQuery, setSearchQuery] = useState("");
+
   return (
-    <header className="titlebar flex h-10 shrink-0 items-center justify-between bg-[#181818] px-3">
+    <header className="titlebar relative flex h-10 shrink-0 items-center justify-between bg-[#181818] px-3">
       <div className="left-div flex items-center gap-4">
         <img
           src={moriLogo}
@@ -131,54 +138,149 @@ function TitleBar() {
         </div>
       </div>
 
+      {/* Always-visible centered search */}
+      <div className="absolute left-1/2 -translate-x-1/2">
+        <div className="flex h-7 w-80 items-center gap-2 rounded-[3px] border border-white/[0.07] bg-[#222222] px-3 transition-colors duration-150 focus-within:border-white/20">
+          <Search size={14} className="shrink-0 text-[#777777]" />
+
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+            placeholder="search files..."
+            aria-label="Search files"
+            className="min-w-0 flex-1 bg-transparent text-[12px] text-[#e8e8e8] outline-none placeholder:text-[#777777]"
+          />
+
+          <span className="shrink-0 text-[10px] text-[#666666]">
+            ctrl+p
+          </span>
+        </div>
+      </div>
+
       <div className="right-div flex items-center gap-3"></div>
     </header>
   );
 }
 
+
+
+type WorkspaceProps = {
+  activeFile: string;
+  onFileSelect: (filename: string) => void;
+  openFiles: string[];
+  onFileClose: (filename: string) => void;
+};
+
+type TabBarProps = {
+  activeFile: string;
+  openFiles: string[];
+  onFileSelect: (filename: string) => void;
+  onFileClose: (filename: string) => void;
+};
 // Main workspace
-function Workspace() {
+function Workspace({
+  activeFile,
+  openFiles,
+  onFileSelect,
+  onFileClose,
+}: WorkspaceProps) {
   return (
     <main className="flex min-h-0 flex-1">
       <section className="editor flex min-w-0 flex-1 flex-col">
-        <TabBar />
+        <TabBar
+          activeFile={activeFile}
+          openFiles={openFiles}
+          onFileSelect={onFileSelect}
+          onFileClose={onFileClose}
+        />
         <div className="min-h-0 flex-1">
           <CodeEditor />
         </div>
       </section>
 
       <section className="explorer w-72 shrink-0 border-l border-white/5 bg-[#161616]">
-        <FileExplorer />
+        <FileExplorer activeFile={activeFile} onFileSelect={onFileSelect} />
       </section>
     </main>
   );
 }
 
-// Current file
-const file: string = "App.tsx";
-
 // Editor tabs
-function TabBar() {
+function TabBar({
+  activeFile,
+  openFiles,
+  onFileSelect,
+  onFileClose,
+}: TabBarProps) {
   return (
-    <nav className="flex h-[34px] shrink-0 bg-[#151515]">
-      <div className="flex h-full items-center gap-2 bg-[#202020] px-3">
-        <img
-          src="/icons/react_ts.svg"
-          alt=""
-          className="h-5 w-5 shrink-0 grayscale brightness-125"
-        />
-        {file}
-      </div>
+    <nav className="flex h-[34px] shrink-0 overflow-x-auto bg-[#151515]">
+      {openFiles.map((filename) => (
+        <div
+          key={filename}
+          className={`group flex h-full shrink-0 items-center text-[13px] ${
+            activeFile === filename
+              ? "bg-[#202020] text-[#e8e8e8]"
+              : "bg-[#151515] text-[#888888]"
+          }`}
+        >
+          <button
+            onClick={() => onFileSelect(filename)}
+            className="flex h-full items-center gap-2 pl-3 pr-2 hover:text-white"
+          >
+            <img
+              src={getFileIcon(filename)}
+              alt=""
+              className="h-5 w-5 shrink-0 brightness-0 invert-[0.7]"
+            />
+            <span>{filename}</span>
+          </button>
+
+          <button
+            onClick={() => onFileClose(filename)}
+            aria-label={`Close ${filename}`}
+            className="mr-2 rounded-[2px] p-1 text-[#777777] opacity-0 transition-opacity hover:text-white group-hover:opacity-100 focus-visible:opacity-100"
+          >
+            <X size={13} />
+          </button>
+        </div>
+      ))}
     </nav>
   );
 }
 
-// Root application
+// Root application // and working on lifting state up
 function App() {
+  const [activeFile, setActiveFile] = useState("App.tsx");
+  const [openFiles, setOpenFiles] = useState<string[]>(["App.tsx"]);
+
+  function openFile(filename: string) {
+    if (!openFiles.includes(filename)) {
+      setOpenFiles([...openFiles, filename]);
+    }
+
+    setActiveFile(filename);
+  }
+
+  function closeFile(filename: string) {
+    const remaining = openFiles.filter((file) => file !== filename);
+
+    setOpenFiles(remaining);
+
+    if (activeFile === filename) {
+      setActiveFile(remaining[remaining.length - 1] ?? "");
+    }
+  }
+
   return (
     <div className="flex h-screen w-screen flex-col bg-[#111111] text-[#e8e8e8]">
       <TitleBar />
-      <Workspace />
+      <Workspace
+        activeFile={activeFile}
+        openFiles={openFiles}
+        onFileSelect={openFile}
+        onFileClose={closeFile}
+      />
     </div>
   );
 }
