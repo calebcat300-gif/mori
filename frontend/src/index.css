@@ -1,0 +1,243 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-heading: var(--font-sans);
+    --font-sans: "Geist Variable", sans-serif;
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+    --primary: oklch(0.205 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.205 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --radius: 0.625rem;
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.205 0 0);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.205 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.205 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.269 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.556 0 0);
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --sidebar: oklch(0.205 0 0);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.488 0.243 264.376);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.269 0 0);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(1 0 0 / 10%);
+    --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+    html {
+        @apply font-sans;
+    }
+}
+
+/* mori — Monaco autocomplete */
+
+.monaco-editor .suggest-widget {
+    background: #181818 !important;
+    border: 1px solid #484848 !important;
+    border-radius: 3px !important;
+    overflow: hidden;
+    box-shadow: 0 8px 24px #00000055 !important;
+}
+
+.monaco-editor .suggest-widget .monaco-list-row {
+    background: transparent !important;
+    color: #999999 !important;
+    transition: color 200ms ease-in-out !important;
+}
+
+.monaco-editor .suggest-widget .monaco-list-row:hover,
+.monaco-editor .suggest-widget .monaco-list-row.focused {
+    background: transparent !important;
+    color: #ffffff !important;
+}
+
+.monaco-editor .suggest-widget .monaco-list-row:hover .label-name,
+.monaco-editor .suggest-widget .monaco-list-row.focused .label-name {
+    color: #ffffff !important;
+    transition: color 200ms ease-in-out !important;
+}
+
+.monaco-editor .suggest-widget .monaco-list-row .label-name {
+    color: #999999 !important;
+    transition: color 200ms ease-in-out !important;
+}
+
+/* mori — monochrome autocomplete */
+
+.monaco-editor .suggest-widget .codicon {
+    color: #999999 !important;
+}
+
+.monaco-editor .suggest-widget .monaco-list-row.focused .codicon,
+.monaco-editor .suggest-widget .monaco-list-row:hover .codicon {
+    color: #ffffff !important;
+}
+
+/* Remove colored suggestion type icons */
+.monaco-editor .suggest-widget .suggest-icon {
+    filter: grayscale(1) !important;
+}
+
+/* Monochrome autocomplete text */
+.monaco-editor .suggest-widget .label-name,
+.monaco-editor .suggest-widget .label-description,
+.monaco-editor .suggest-widget .details-label {
+    color: #999999 !important;
+    transition: color 200ms ease-in-out !important;
+}
+
+.monaco-editor .suggest-widget .monaco-list-row.focused .label-name,
+.monaco-editor .suggest-widget .monaco-list-row:hover .label-name {
+    color: #ffffff !important;
+}
+
+
+/* mori — monochrome autocomplete icons */
+.monaco-editor .suggest-widget .suggest-icon,
+.monaco-editor .suggest-widget .codicon {
+  filter: grayscale(1) !important;
+  color: #a3a3a3 !important;
+  transition: color 200ms ease-in-out !important;
+}
+
+.monaco-editor .suggest-widget .monaco-list-row.focused .suggest-icon,
+.monaco-editor .suggest-widget .monaco-list-row:hover .suggest-icon,
+.monaco-editor .suggest-widget .monaco-list-row.focused .codicon,
+.monaco-editor .suggest-widget .monaco-list-row:hover .codicon {
+  color: #ffffff !important;
+}
+
+.monaco-editor .suggest-widget {
+  --vscode-symbolIcon-arrayForeground: #a3a3a3;
+  --vscode-symbolIcon-booleanForeground: #a3a3a3;
+  --vscode-symbolIcon-classForeground: #a3a3a3;
+  --vscode-symbolIcon-colorForeground: #a3a3a3;
+  --vscode-symbolIcon-constantForeground: #a3a3a3;
+  --vscode-symbolIcon-enumeratorForeground: #a3a3a3;
+  --vscode-symbolIcon-enumeratorMemberForeground: #a3a3a3;
+  --vscode-symbolIcon-eventForeground: #a3a3a3;
+  --vscode-symbolIcon-fieldForeground: #a3a3a3;
+  --vscode-symbolIcon-fileForeground: #a3a3a3;
+  --vscode-symbolIcon-folderForeground: #a3a3a3;
+  --vscode-symbolIcon-functionForeground: #a3a3a3;
+  --vscode-symbolIcon-interfaceForeground: #a3a3a3;
+  --vscode-symbolIcon-keyForeground: #a3a3a3;
+  --vscode-symbolIcon-keywordForeground: #a3a3a3;
+  --vscode-symbolIcon-methodForeground: #a3a3a3;
+  --vscode-symbolIcon-moduleForeground: #a3a3a3;
+  --vscode-symbolIcon-namespaceForeground: #a3a3a3;
+  --vscode-symbolIcon-nullForeground: #a3a3a3;
+  --vscode-symbolIcon-numberForeground: #a3a3a3;
+  --vscode-symbolIcon-objectForeground: #a3a3a3;
+  --vscode-symbolIcon-operatorForeground: #a3a3a3;
+  --vscode-symbolIcon-packageForeground: #a3a3a3;
+  --vscode-symbolIcon-propertyForeground: #a3a3a3;
+  --vscode-symbolIcon-referenceForeground: #a3a3a3;
+  --vscode-symbolIcon-snippetForeground: #a3a3a3;
+  --vscode-symbolIcon-stringForeground: #a3a3a3;
+  --vscode-symbolIcon-structForeground: #a3a3a3;
+  --vscode-symbolIcon-textForeground: #a3a3a3;
+  --vscode-symbolIcon-typeParameterForeground: #a3a3a3;
+  --vscode-symbolIcon-unitForeground: #a3a3a3;
+  --vscode-symbolIcon-variableForeground: #a3a3a3;
+}
